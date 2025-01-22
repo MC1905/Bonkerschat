@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
 
     // Controleer of de uploads-map bestaat, anders maak deze aan
     if (!is_dir($target_dir)) {
-        mkdir($target_dir, 0777, true); // Maakt de map met juiste rechten
+        mkdir($target_dir, 0777, true);
     }
 
     $imageFileType = strtolower(pathinfo($_FILES["profile_pic"]["name"], PATHINFO_EXTENSION));
@@ -53,42 +53,125 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_username'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Profiel</title>
     <style>
-        .container {
-            max-width: 400px;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin: auto;
-            margin-top: 50px;
-        }
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        button {
-            background: #007bff;
+        body {
+            background: #1b2838;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
             color: white;
-            cursor: pointer;
-            font-size: 16px;
         }
-        button:hover {
-            background: #0056b3;
+
+        .container {
+            max-width: 380px;
+            background: #22303f;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #f8f9fa;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #4a90e2;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        p {
+            font-size: 16px;
+            color: #f8f9fa;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #2e3d4e;
+            color: white;
+            text-align: center;
+            transition: border 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border: 2px solid #4a90e2;
+            outline: none;
+            background: #34495e;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        button {
+            width: 95%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .btn-blue {
+            background: #4a90e2;
+            color: white;
+        }
+
+        .btn-blue:hover {
+            background: #357abd;
+        }
+
+        .btn-green {
+            background: #1abc9c;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background: #16a085;
+        }
+
+        .btn-red {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-red:hover {
+            background: #c0392b;
+        }
+
+        .profile-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px;
+            width: 95%;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -98,40 +181,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_username'])) {
         <img src="<?php echo (!empty($user['profile_pic']) && file_exists($user['profile_pic'])) ? htmlspecialchars($user['profile_pic']) : 'uploads/default.png'; ?>" alt="Profielfoto" class="profile-img">
         <p><strong>Gebruikersnaam:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
         
-        <form action="profile.php" method="POST">
+        <form action="profile.php" method="POST" class="form-group">
             <input type="text" name="new_username" placeholder="Nieuwe gebruikersnaam" required>
-            <button type="submit">Gebruikersnaam wijzigen</button>
+            <button type="submit" class="btn-blue">Gebruikersnaam wijzigen</button>
         </form>
         
-        <form action="profile.php" method="POST" enctype="multipart/form-data">
+        <form action="profile.php" method="POST" enctype="multipart/form-data" class="form-group">
             <input type="file" name="profile_pic" required>
-            <button type="submit">Profielfoto wijzigen</button>
+            <button type="submit" class="btn-blue">Profielfoto wijzigen</button>
         </form>
         
-        <a href="index.php" class="profile-button">Terug naar Chat</a>
+        <a href="index.php" class="profile-button btn-green">Terug naar Chat</a>
     </div>
-    <script>
-        // Scroll automatisch naar het laatste bericht
-        function scrollToBottom() {
-            var messageContainer = document.getElementById("messages");
-            if (messageContainer) {
-                messageContainer.scrollTop = messageContainer.scrollHeight;
-            }
-        }
-
-        // Sorteer berichten oplopend en scroll automatisch naar onder
-        window.onload = function() {
-            scrollToBottom();
-        };
-
-        document.addEventListener("DOMContentLoaded", function() {
-            var chatForm = document.getElementById("chat-form");
-            if (chatForm) {
-                chatForm.addEventListener("submit", function() {
-                    setTimeout(scrollToBottom, 100);
-                });
-            }
-        });
-    </script>
 </body>
 </html>
