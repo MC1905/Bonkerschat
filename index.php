@@ -41,11 +41,11 @@ $user = $result->fetch_assoc();
         <h2>Chat</h2>
         <div class="messages" id="messages">
             <?php
-            $chatQuery = "SELECT users.username, users.profile_pic, messages.message 
-                          FROM messages 
-                          JOIN users ON messages.user_id = users.id 
-                          ORDER BY messages.id DESC";
-            $chatResult = $conn->query($chatQuery);
+           $chatQuery = "SELECT users.username, users.profile_pic, messages.message 
+           FROM messages 
+           JOIN users ON messages.user_id = users.id 
+           ORDER BY messages.id ASC"; // Use ASC to fetch oldest first
+$chatResult = $conn->query($chatQuery);
             while ($chatRow = $chatResult->fetch_assoc()) {
                 $profilePic = !empty($chatRow['profile_pic']) ? $chatRow['profile_pic'] : 'uploads/default.png';
                 echo "<div class='chat-message'>";
