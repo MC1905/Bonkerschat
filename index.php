@@ -62,4 +62,20 @@ $chatResult = $conn->query($chatQuery);
     </div>
 
 </body>
+<script>
+    const messagesContainer = document.getElementById('messages');
+
+
+    function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+  
+    window.onload = scrollToBottom;
+
+    document.getElementById('chat-form').addEventListener('submit', function () {
+        setTimeout(scrollToBottom, 100); 
+    });
+</script>
+
 </html>
