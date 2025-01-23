@@ -1,15 +1,14 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $host = 'localhost';
 $user = 'root';
-$pass = '';
+$password = '';
 $dbname = 'chat_db';
 
-$conn = new mysqli($host, $user, $pass, $dbname);
+// Create connection
+$conn = new mysqli($host, $user, $password, $dbname);
 
+// Check connection
 if ($conn->connect_error) {
-    die("Verbinding mislukt: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 ?>
